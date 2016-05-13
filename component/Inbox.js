@@ -1,7 +1,7 @@
 import React from 'react'
 
 /* Inbox */
- const Inbox = React.createClass({
+const Inbox = React.createClass({
 	render() {
 		return (
 			<div>
