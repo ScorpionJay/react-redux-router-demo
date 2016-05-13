@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router, IndexRoute ,Route, hashHistory,Link,Redirect } from 'react-router'
 
-import Dashboard from './Dashboard'
+import Home from './Home'
 import About from './About'
 import Inbox from './Inbox'
 import Message from './Message'
@@ -13,10 +13,11 @@ const App = React.createClass({
 		return (
 			<div className="nav">
 				<ul>
+					<li><Link to="/">Home</Link></li>
+					<li><Link to="/inbox">Inbox</Link></li>
 					<li><Link to="/about">About</Link></li>
-					<li><Link to="/inbox">inbox</Link></li>
 				</ul>
-				{this.props.children}
+				<div className="content">{this.props.children}</div>
 			</div>
 		);
 	}
@@ -26,7 +27,7 @@ const App = React.createClass({
 const Routes = {
 	path: '/',
 	component: App,
-	indexRoute :{component: Dashboard},
+	indexRoute :{component: Home},
 	childRoutes: [
 		{ path: 'about', component: About},
 		{

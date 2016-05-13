@@ -11,6 +11,7 @@ module.exports = {
         filename: "./bundle.js"
 	},
 
+	// 解决的文件
 	resolve: {
         extensions: ['', '.js','.scss']
     },

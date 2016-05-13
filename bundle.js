@@ -62,7 +62,7 @@
 
 	__webpack_require__(234);
 
-	(0, _reactDom.render)(_react2.default.createElement(_reactRouter.Router, { history: _reactRouter.hashHistory, routes: _App2.default }), document.getElementById('content'));
+	(0, _reactDom.render)(_react2.default.createElement(_reactRouter.Router, { history: _reactRouter.hashHistory, routes: _App2.default }), document.getElementById('root'));
 
 /***/ },
 /* 1 */
@@ -25673,9 +25673,9 @@
 
 	var _reactRouter = __webpack_require__(168);
 
-	var _Dashboard = __webpack_require__(230);
+	var _Home = __webpack_require__(230);
 
-	var _Dashboard2 = _interopRequireDefault(_Dashboard);
+	var _Home2 = _interopRequireDefault(_Home);
 
 	var _About = __webpack_require__(231);
 
@@ -25707,8 +25707,8 @@
 						null,
 						_react2.default.createElement(
 							_reactRouter.Link,
-							{ to: '/about' },
-							'About'
+							{ to: '/' },
+							'Home'
 						)
 					),
 					_react2.default.createElement(
@@ -25717,11 +25717,24 @@
 						_react2.default.createElement(
 							_reactRouter.Link,
 							{ to: '/inbox' },
-							'inbox'
+							'Inbox'
+						)
+					),
+					_react2.default.createElement(
+						'li',
+						null,
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ to: '/about' },
+							'About'
 						)
 					)
 				),
-				this.props.children
+				_react2.default.createElement(
+					'div',
+					{ className: 'content' },
+					this.props.children
+				)
 			);
 		}
 	});
@@ -25730,7 +25743,7 @@
 	var Routes = {
 		path: '/',
 		component: App,
-		indexRoute: { component: _Dashboard2.default },
+		indexRoute: { component: _Home2.default },
 		childRoutes: [{ path: 'about', component: _About2.default }, {
 			path: 'inbox',
 			component: _Inbox2.default,
@@ -25755,10 +25768,10 @@
 /* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -25767,18 +25780,21 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Dashboard = _react2.default.createClass({
-	  displayName: 'Dashboard',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'Welcome to the app!!!'
-	    );
-	  }
+	var Home = _react2.default.createClass({
+		displayName: "Home",
+		handleClick: function handleClick() {
+			alert(1);
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				"div",
+				{ className: "home-content", onClick: this.handleClick },
+				" Welcome to the app!"
+			);
+		}
 	});
 
-	exports.default = Dashboard;
+	exports.default = Home;
 
 /***/ },
 /* 231 */
@@ -25826,7 +25842,7 @@
 				return _react2.default.createElement(
 					'h3',
 					null,
-					'About'
+					'About...'
 				);
 			}
 		}]);
