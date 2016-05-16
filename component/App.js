@@ -11,7 +11,7 @@ const App = React.createClass({
 	render: function(){
 		return (
 			<div className="nav">
-				<ul>
+				<ul className="nav-ul">
 					<li><Link to="/home" activeClassName="active">Home</Link></li>
 					<li><Link to="/inbox" activeClassName="active">Inbox</Link></li>
 					<li><Link to="/about" activeClassName="active">About</Link></li>

@@ -9,7 +9,10 @@ import React from 'react'
 
 class About extends React.Component{
 	render() {
-		return <h3>About...</h3>
+		return <div>
+					<h3>About...</h3>
+					<div>react + react-router</div>
+				</div>
 	}
 }
 

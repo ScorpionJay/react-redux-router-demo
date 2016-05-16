@@ -21,6 +21,12 @@ a {
 li {
   list-style: none; }
 
+.left {
+  float: left; }
+
+.right {
+  float: right; }
+
 /**
 *	nav 
 */
@@ -29,21 +35,21 @@ li {
 */
 .nav {
   width: 100%; }
-  .nav ul {
+  .nav .nav-ul {
     width: 100%;
     height: 35px;
     padding: 0px; }
-    .nav ul li {
+    .nav .nav-ul li {
       float: left;
       width: 33.33333%;
       text-align: center;
       line-height: 35px;
       background-color: #999;
       height: 35px; }
-      .nav ul li a {
+      .nav .nav-ul li a {
         color: #fff;
         font-size: 20px; }
-      .nav ul li .active {
+      .nav .nav-ul li .active {
         color: #000; }
 
 /**
@@ -58,11 +64,16 @@ li {
   font-size: 30px;
   height: 400px; }
 
+.item {
+  border-bottom: 1px #999 solid;
+  background-color: #fff;
+  padding: 5px; }
+
 /**
 * body
 */
 body {
-  background-color: #fff; }
+  background-color: #eee; }
 
 .content {
   margin-top: 20px; }
