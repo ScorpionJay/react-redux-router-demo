@@ -25707,7 +25707,7 @@
 						null,
 						_react2.default.createElement(
 							_reactRouter.Link,
-							{ to: '/' },
+							{ to: '/home', activeClassName: 'active' },
 							'Home'
 						)
 					),
@@ -25716,7 +25716,7 @@
 						null,
 						_react2.default.createElement(
 							_reactRouter.Link,
-							{ to: '/inbox' },
+							{ to: '/inbox', activeClassName: 'active' },
 							'Inbox'
 						)
 					),
@@ -25725,7 +25725,7 @@
 						null,
 						_react2.default.createElement(
 							_reactRouter.Link,
-							{ to: '/about' },
+							{ to: '/about', activeClassName: 'active' },
 							'About'
 						)
 					)
@@ -25744,7 +25744,7 @@
 		path: '/',
 		component: App,
 		indexRoute: { component: _Home2.default },
-		childRoutes: [{ path: 'about', component: _About2.default }, {
+		childRoutes: [{ path: 'home', component: _Home2.default }, { path: 'about', component: _About2.default }, {
 			path: 'inbox',
 			component: _Inbox2.default,
 			childRoutes: [{
@@ -25768,7 +25768,7 @@
 /* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -25781,15 +25781,27 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Home = _react2.default.createClass({
-		displayName: "Home",
+		displayName: 'Home',
+
+
+		// 初始化数据
+		getInitialState: function getInitialState() {
+			return { data: {
+					name: 'jay'
+				} };
+		},
+
+
+		// 事件
 		handleClick: function handleClick() {
 			alert(1);
 		},
 		render: function render() {
 			return _react2.default.createElement(
-				"div",
-				{ className: "home-content", onClick: this.handleClick },
-				" Welcome to the app!"
+				'div',
+				{ className: 'home-content', onClick: this.handleClick },
+				' Welcome to the app! ',
+				this.state.data.name
 			);
 		}
 	});

@@ -25,6 +25,10 @@
 						color:$nav-a-color;
 						font-size:$nav-a-font-size;
 					}
+
+					.active {
+						color:$nav-active-color;
+					}
 				}
 		}
 }

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /**
-* msin 
+* main 
 */
 /**
 *	variables
@@ -43,6 +43,8 @@ li {
       .nav ul li a {
         color: #fff;
         font-size: 20px; }
+      .nav ul li .active {
+        color: #000; }
 
 /**
 * home 

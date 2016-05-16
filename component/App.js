@@ -6,16 +6,15 @@ import About from './About'
 import Inbox from './Inbox'
 import Message from './Message'
 
-
 /* App */
 const App = React.createClass({
 	render: function(){
 		return (
 			<div className="nav">
 				<ul>
-					<li><Link to="/">Home</Link></li>
-					<li><Link to="/inbox">Inbox</Link></li>
-					<li><Link to="/about">About</Link></li>
+					<li><Link to="/home" activeClassName="active">Home</Link></li>
+					<li><Link to="/inbox" activeClassName="active">Inbox</Link></li>
+					<li><Link to="/about" activeClassName="active">About</Link></li>
 				</ul>
 				<div className="content">{this.props.children}</div>
 			</div>
@@ -29,6 +28,7 @@ const Routes = {
 	component: App,
 	indexRoute :{component: Home},
 	childRoutes: [
+		{ path: 'home', component: Home},
 		{ path: 'about', component: About},
 		{
 			path: 'inbox',
