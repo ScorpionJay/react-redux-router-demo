@@ -13,7 +13,7 @@ export default class ProductList extends Component{
 							// 	return <li><ProductItem item={item} /></li>
 							// })
 
-							this.props.data.map( item => <li><ProductItem item={item} id={'/messages/' + item.id}/></li> )
+							this.props.data.map( item => <li><ProductItem item={item} /></li> )
 						}
 					</ul>
 				</div>

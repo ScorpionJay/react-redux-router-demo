@@ -40,6 +40,14 @@ npm install extract-text-webpack-plugin --save
 
 没用在上层做了处理
 
+## es6 字符串模块 解决上一个问题
+坑死人
+
+let name = 'react'
+console.log(`my name is ${name}`)
+
+` 不是'  一个是左上角的~下面的键 没看清弄成了单引号
+
 
 ## [webpack url-loader](https://github.com/webpack/url-loader)
 
