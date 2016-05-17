@@ -13,7 +13,7 @@ module.exports = {
 
 	// 解决的文件
 	resolve: {
-        extensions: ['', '.js','.scss']
+        extensions: ['', '.js','.jsx','.scss','.jpg']
     },
 	
 	// 模块加载器
@@ -21,7 +21,11 @@ module.exports = {
         loaders: [
         	{ test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
         	{ test: /\.scss$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")},
-            { test: /\.js$/,exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react' }
+            { test: /\.jsx|.js$/,exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react' },
+            {
+                test: /\.(jpe?g|png|gif|svg|ico)$/,
+                loader: 'url?limit=8024&name=img/[name].[ext]'
+            },
         ]
     },
 

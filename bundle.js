@@ -60,7 +60,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(237);
+	__webpack_require__(247);
 
 	(0, _reactDom.render)(_react2.default.createElement(_reactRouter.Router, { history: _reactRouter.hashHistory, routes: _App2.default }), document.getElementById('root'));
 
@@ -25677,15 +25677,15 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _About = __webpack_require__(234);
+	var _About = __webpack_require__(244);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _Inbox = __webpack_require__(235);
+	var _Inbox = __webpack_require__(245);
 
 	var _Inbox2 = _interopRequireDefault(_Inbox);
 
-	var _Message = __webpack_require__(236);
+	var _Message = __webpack_require__(246);
 
 	var _Message2 = _interopRequireDefault(_Message);
 
@@ -25786,6 +25786,10 @@
 
 	var _ProductList2 = _interopRequireDefault(_ProductList);
 
+	var _Slider = __webpack_require__(234);
+
+	var _Slider2 = _interopRequireDefault(_Slider);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Home = _react2.default.createClass({
@@ -25795,7 +25799,8 @@
 		// 组建挂载初始化值
 		getInitialState: function getInitialState() {
 			return {
-				data: [{ "id": 10 }]
+				data: [],
+				slider: []
 			};
 		},
 
@@ -25810,10 +25815,31 @@
 		// 渲染完成
 		componentDidMount: function componentDidMount() {
 			console.log('componentDidMount');
+
+			// get slider data
+			_jquery2.default.ajax({
+				url: 'json/slider.json',
+				dataType: 'json',
+				success: function (data) {
+					console.log('slider json');
+					console.log(data);
+					var slider = [];
+					data.map(function (item) {
+						return slider.push({ src: __webpack_require__(238)("./" + item.src), alt: item.alt });
+					});
+					this.setState({ slider: slider });
+				}.bind(this),
+				error: function (xhr, status, err) {
+					console.error(this.props.url, status, err.toString());
+				}.bind(this)
+			});
+
+			// get list data
 			_jquery2.default.ajax({
 				url: 'json/home.json',
 				dataType: 'json',
 				success: function (data) {
+					console.log('product json');
 					console.log(data);
 					this.setState({ data: data });
 				}.bind(this),
@@ -25826,7 +25852,7 @@
 			return _react2.default.createElement(
 				'div',
 				{ className: 'home-content' },
-				_react2.default.createElement('img', { src: '/img/logo.png', alert: 'img', width: '95%', onClick: this.handleClick }),
+				_react2.default.createElement(_Slider2.default, { items: this.state.slider }),
 				_react2.default.createElement(_ProductList2.default, { data: this.state.data })
 			);
 		}
@@ -35808,7 +35834,6 @@
 						_react2.default.createElement(
 							'span',
 							{ className: 'left' },
-							id,
 							name
 						),
 						_react2.default.createElement(
@@ -35828,6 +35853,394 @@
 
 /***/ },
 /* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SliderItem = __webpack_require__(235);
+
+	var _SliderItem2 = _interopRequireDefault(_SliderItem);
+
+	var _SliderDots = __webpack_require__(236);
+
+	var _SliderDots2 = _interopRequireDefault(_SliderDots);
+
+	var _SliderArrows = __webpack_require__(237);
+
+	var _SliderArrows2 = _interopRequireDefault(_SliderArrows);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Slider = function (_Component) {
+	  _inherits(Slider, _Component);
+
+	  function Slider(props) {
+	    _classCallCheck(this, Slider);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Slider).call(this, props));
+
+	    _this.state = {
+	      nowLocal: 0
+	    };
+	    return _this;
+	  }
+
+	  // 向前向后多少
+
+
+	  _createClass(Slider, [{
+	    key: 'turn',
+	    value: function turn(n) {
+	      console.log();
+	      var _n = this.state.nowLocal + n;
+	      if (_n < 0) {
+	        _n = _n + this.props.items.length;
+	      }
+	      if (_n >= this.props.items.length) {
+	        _n = _n - this.props.items.length;
+	      }
+	      this.setState({ nowLocal: _n });
+	    }
+
+	    // 开始自动轮播
+
+	  }, {
+	    key: 'goPlay',
+	    value: function goPlay() {
+	      var _this2 = this;
+
+	      if (this.props.autoplay) {
+	        this.autoPlayFlag = setInterval(function () {
+	          _this2.turn(1);
+	        }, this.props.delay * 1000);
+	      }
+	    }
+
+	    // 暂停自动轮播
+
+	  }, {
+	    key: 'pausePlay',
+	    value: function pausePlay() {
+	      clearInterval(this.autoPlayFlag);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.goPlay();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var count = this.props.items.length;
+
+	      var itemNodes = this.props.items.map(function (item, idx) {
+	        return _react2.default.createElement(_SliderItem2.default, { item: item, count: count, key: 'item' + idx });
+	      });
+
+	      var arrowsNode = _react2.default.createElement(_SliderArrows2.default, { turn: this.turn.bind(this) });
+
+	      var dotsNode = _react2.default.createElement(_SliderDots2.default, { turn: this.turn.bind(this), count: count, nowLocal: this.state.nowLocal });
+
+	      return _react2.default.createElement(
+	        'div',
+	        {
+	          className: 'slider',
+	          onMouseOver: this.props.pause ? this.pausePlay.bind(this) : null, onMouseOut: this.props.pause ? this.goPlay.bind(this) : null },
+	        _react2.default.createElement(
+	          'ul',
+	          { style: {
+	              left: -100 * this.state.nowLocal + "%",
+	              transitionDuration: this.props.speed + "s",
+	              width: this.props.items.length * 100 + "%"
+	            } },
+	          itemNodes
+	        ),
+	        this.props.arrows ? arrowsNode : null,
+	        this.props.dots ? dotsNode : null
+	      );
+	    }
+	  }]);
+
+	  return Slider;
+	}(_react.Component);
+
+	exports.default = Slider;
+
+
+	Slider.defaultProps = {
+	  speed: 1,
+	  delay: 2,
+	  pause: true,
+	  autoplay: true,
+	  dots: true,
+	  arrows: true,
+	  items: []
+	};
+	Slider.autoPlayFlag = null;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SliderItem = function (_Component) {
+	  _inherits(SliderItem, _Component);
+
+	  function SliderItem(props) {
+	    _classCallCheck(this, SliderItem);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SliderItem).call(this, props));
+	  }
+
+	  _createClass(SliderItem, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var count = _props.count;
+	      var item = _props.item;
+
+	      var width = 100 / count + '%';
+	      return _react2.default.createElement(
+	        'li',
+	        { className: 'slider-item', style: { width: width } },
+	        _react2.default.createElement('img', { src: item.src, alt: item.alt })
+	      );
+	    }
+	  }]);
+
+	  return SliderItem;
+	}(_react.Component);
+
+	exports.default = SliderItem;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SliderDots = function (_Component) {
+	  _inherits(SliderDots, _Component);
+
+	  function SliderDots(props) {
+	    _classCallCheck(this, SliderDots);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SliderDots).call(this, props));
+	  }
+
+	  _createClass(SliderDots, [{
+	    key: 'handleDotClick',
+	    value: function handleDotClick(i) {
+	      var option = i - this.props.nowLocal;
+	      this.props.turn(option);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var dotNodes = [];
+	      var _props = this.props;
+	      var count = _props.count;
+	      var nowLocal = _props.nowLocal;
+
+	      for (var i = 0; i < count; i++) {
+	        dotNodes[i] = _react2.default.createElement('span', {
+	          key: 'dot' + i,
+	          className: "slider-dot" + (i === this.props.nowLocal ? " slider-dot-selected" : ""),
+	          onClick: this.handleDotClick.bind(this, i) });
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'slider-dots-wrap' },
+	        dotNodes
+	      );
+	    }
+	  }]);
+
+	  return SliderDots;
+	}(_react.Component);
+
+	exports.default = SliderDots;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SliderArrows = function (_Component) {
+	  _inherits(SliderArrows, _Component);
+
+	  function SliderArrows(props) {
+	    _classCallCheck(this, SliderArrows);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SliderArrows).call(this, props));
+	  }
+
+	  _createClass(SliderArrows, [{
+	    key: "handleArrowClick",
+	    value: function handleArrowClick(option) {
+	      this.props.turn(option);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "slider-arrows-wrap" },
+	        _react2.default.createElement(
+	          "span",
+	          {
+	            className: "slider-arrow slider-arrow-left",
+	            onClick: this.handleArrowClick.bind(this, -1) },
+	          "<"
+	        ),
+	        _react2.default.createElement(
+	          "span",
+	          {
+	            className: "slider-arrow slider-arrow-right",
+	            onClick: this.handleArrowClick.bind(this, 1) },
+	          ">"
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SliderArrows;
+	}(_react.Component);
+
+	exports.default = SliderArrows;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./demo11": 239,
+		"./demo11.jpg": 239,
+		"./demo12": 240,
+		"./demo12.jpg": 240,
+		"./demo13": 241,
+		"./demo13.jpg": 241,
+		"./favicon.ico": 242,
+		"./logo.png": 243
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 238;
+
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/demo11.jpg";
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/demo12.jpg";
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/demo13.jpg";
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/favicon.ico";
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/logo.png";
+
+/***/ },
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35870,9 +36283,18 @@
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					'h3',
+					'div',
 					null,
-					'About...'
+					_react2.default.createElement(
+						'h3',
+						null,
+						'About...'
+					),
+					_react2.default.createElement(
+						'div',
+						null,
+						'react + react-router'
+					)
 				);
 			}
 		}]);
@@ -35883,7 +36305,7 @@
 	exports.default = About;
 
 /***/ },
-/* 235 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35905,11 +36327,6 @@
 			return _react2.default.createElement(
 				"div",
 				null,
-				_react2.default.createElement(
-					"h2",
-					null,
-					"Inbox"
-				),
 				this.props.children || "Welcome to your Inbox"
 			);
 		}
@@ -35918,7 +36335,7 @@
 	exports.default = Inbox;
 
 /***/ },
-/* 236 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35931,17 +36348,75 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _jquery = __webpack_require__(231);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/* Message */
 	var Message = _react2.default.createClass({
 		displayName: 'Message',
+
+
+		// 组建挂载初始化值
+		getInitialState: function getInitialState() {
+			return {
+				data: [{ "id": 10 }]
+			};
+		},
+
+
+		// 渲染完成
+		componentDidMount: function componentDidMount() {
+			console.log('componentDidMount' + this.props.params.id);
+
+			_jquery2.default.ajax({
+				url: 'json/home.json',
+				dataType: 'json',
+				success: function (data) {
+					console.log(data);
+
+					//let item = data.map(item => {if(item.id===this.props.params.id){return item} })
+					for (var i = 0; i < data.length; i++) {
+						if (data[i].id == this.props.params.id) {
+							this.setState({ data: data[i] });
+							break;
+						}
+					}
+				}.bind(this),
+				error: function (xhr, status, err) {
+					console.error(this.props.url, status, err.toString());
+				}.bind(this)
+			});
+		},
 		render: function render() {
+			var _state$data = this.state.data;
+			var id = _state$data.id;
+			var name = _state$data.name;
+			var description = _state$data.description;
+
+
 			return _react2.default.createElement(
-				'h3',
+				'div',
 				null,
-				'Message ',
-				this.props.params.id
+				'url参数 ',
+				this.props.params.id,
+				_react2.default.createElement(
+					'div',
+					null,
+					id
+				),
+				_react2.default.createElement(
+					'div',
+					null,
+					name
+				),
+				_react2.default.createElement(
+					'div',
+					null,
+					description
+				)
 			);
 		}
 	});
@@ -35949,7 +36424,7 @@
 	exports.default = Message;
 
 /***/ },
-/* 237 */
+/* 247 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

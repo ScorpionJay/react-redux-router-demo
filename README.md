@@ -39,3 +39,10 @@ npm install extract-text-webpack-plugin --save
 		}
 
 没用在上层做了处理
+
+
+## [webpack url-loader](https://github.com/webpack/url-loader)
+
+file-loader ???
+
+## [slider](https://github.com/TongchengQiu/react-slider)

@@ -6,6 +6,7 @@ import About from './About'
 import Inbox from './Inbox'
 import Message from './Message'
 
+
 /* App */
 const App = React.createClass({
 	render: function(){
